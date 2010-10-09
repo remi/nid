@@ -1,0 +1,8 @@
+- if @subtitle
+  %h2= @subtitle
+%ul#users
+  - @users.each do |user|
+    %li
+      %a(href="#{user.permalink}")
+        %span.username= user.username
+        %span.bar(style="width: #{(user.mention_count.to_f / @max_mentions.to_f) * 100}%;")

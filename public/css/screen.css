@@ -16,6 +16,10 @@ body {
   line-height: 1.25;
 }
 
+a {
+  color: #12152F;
+}
+
 /* }}} */
 
 /* Layout {{{
@@ -99,3 +103,33 @@ header h1 a {
 }
 
 /* }}} */
+
+/* Users {{{
+ ******************************************************/
+
+#users li {
+  padding: 5px 15px 5px;
+}
+
+#users a {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  padding: 5px 10px;
+}
+
+#users a .username {
+  z-index: 40;
+  position: relative;
+}
+
+#users a .bar {
+  display: block;
+  position: absolute;
+  z-index: 30;
+  background: #f00;
+  height: 80px;
+  top: 0;
+  left: 0;
+  background: #dddff5;
+}

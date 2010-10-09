@@ -26,6 +26,7 @@ class User # {{{
   property :id, Serial
   property :user_id, Integer, :max => 9223372036854775808
   property :username, String
+  property :mention_count, Integer
 
   has n, :mentions
 
@@ -40,6 +41,7 @@ class Tag # {{{
 
   property :id, Serial
   property :tag, String
+  property :hashtag_count, Integer
 
   has n, :hashtags
 
@@ -60,6 +62,11 @@ class Mention # {{{
   belongs_to :user
   belongs_to :tweet
 
+  before :save do
+    self.user.mention_count += 1
+    self.user.save
+  end
+
 end # }}}
 
 class Hashtag # {{{
@@ -68,6 +75,11 @@ class Hashtag # {{{
   property :id, Serial
   belongs_to :tag
   belongs_to :tweet
+
+  before :save do
+    self.tag.hashtag_count += 1
+    self.tag.save
+  end
 
 end # }}}
 

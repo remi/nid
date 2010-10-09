@@ -49,6 +49,14 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
+  get "/mentions" do # {{{
+    @users = User.all :order => :mention_count.desc
+    @max_mentions = @users.first.mention_count
+
+    @subtitle = "Mentionned users"
+    haml :users
+  end # }}}
+
   get "/mentions/:username" do # {{{
     user = User.first :username => params[:username]
     return "error" unless user
@@ -68,8 +76,6 @@ class Nid < Sinatra::Base
     @subtitle = "Tweets tagged with #{tag.hashtag}"
     haml :index
   end # }}}
-
-  # Class Methods
 
 end
 # vim: fdm=marker:
