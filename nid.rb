@@ -30,12 +30,12 @@ class Nid < Sinatra::Base
   # }}}
 
   get "/import" do # {{{
-    Importer.import!
+    Importer.import
     "Done importing."
   end # }}}
 
   get "/update" do # {{{
-    Importer.update!
+    Importer.update
     "Done updating."
   end # }}}
 

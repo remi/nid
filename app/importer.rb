@@ -28,7 +28,7 @@ class Importer < Nid
     client = Twitter::Base.new(oauth)
   end # }}}
 
-  def self.import! # {{{
+  def self.import # {{{
     client = Importer.twitter
 
     page = 1
@@ -57,7 +57,7 @@ class Importer < Nid
     end
   end # }}}
 
-  def self.update! # {{{
+  def self.update # {{{
     client = Importer.twitter
     page = 1
     options = {
