@@ -26,7 +26,7 @@ class User # {{{
   property :id, Serial
   property :user_id, Integer, :max => 9223372036854775808
   property :username, String
-  property :mention_count, Integer
+  property :mention_count, Integer, :default => 0
 
   has n, :mentions
 
@@ -41,7 +41,7 @@ class Tag # {{{
 
   property :id, Serial
   property :tag, String
-  property :hashtag_count, Integer
+  property :hashtag_count, Integer, :default => 0
 
   has n, :hashtags
 
