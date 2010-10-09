@@ -4,7 +4,7 @@ class Importer < Nid
     new_tweet = Tweet.create({
       :tweet_id => tweet.id,
       :text => tweet.text,
-      :created_at => tweet.created_at
+      :created_at => Time.at(DateTime.parse(tweet.created_at).to_i)
     })
 
     # Import user @mentions
