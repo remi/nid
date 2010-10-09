@@ -18,8 +18,11 @@ require 'action_view'
 class Nid < Sinatra::Base
 
   require 'app/models'
+  require 'app/importer'
 
   NID_CONFIG = YAML.load_file File.join(File.dirname(__FILE__), "config/nid.yml")
+
+  # Routes
 
   # sinatra configuration {{{
   enable :static
@@ -27,43 +30,17 @@ class Nid < Sinatra::Base
   # }}}
 
   get "/import" do # {{{
-    return "no more import!"
-    #DataMapper.auto_upgrade!
+    Importer.import!
+    "Done importing."
+  end # }}}
 
-    DataMapper.auto_migrate!
-
-    twitter_config = NID_CONFIG["twitter"]
-    oauth = Twitter::OAuth.new twitter_config["consumer_key"], twitter_config["consumer_secret"]
-    oauth.authorize_from_access twitter_config["access_token"], twitter_config["access_secret"]
-
-    client = Twitter::Base.new(oauth)
-    tweets = client.user_timeline(:count => 200, :include_entities => 1)
-
-    tweets.each do |tweet|
-      new_tweet = Tweet.create({
-        :tweet_id => tweet.id,
-        :text => tweet.text,
-        :created_at => tweet.created_at
-      })
-
-      # Import user @mentions
-      tweet.entities.user_mentions.each do |mention|
-        new_tweet.mentions.push({ :user_id => User.first_or_create({ :user_id => mention.id, :username => mention.screen_name, }).id })
-      end
-
-      # Import #hashtags
-      tweet.entities.hashtags.each do |hashtag|
-        new_tweet.hashtags.push({ :tag_id => Tag.first_or_create({ :tag => hashtag.text, }).id })
-      end
-
-      new_tweet.save
-    end
-
-    "done."
+  get "/update" do # {{{
+    Importer.update!
+    "Done updating."
   end # }}}
 
   get "/" do # {{{
-    @tweets = Tweet.all :limit => 20
+    @tweets = Tweet.all :limit => 20, :order => :created_at.desc
     haml :index
   end # }}}
 
@@ -76,7 +53,7 @@ class Nid < Sinatra::Base
     user = User.first :username => params[:username]
     return "error" unless user
 
-    @tweets = Mention.all(:user_id => user.id).tweets
+    @tweets = Mention.all(:user_id => user.id).tweets.all :order => :created_at.desc
 
     @subtitle = "Tweets mentionning #{user.username}"
     haml :index
@@ -86,11 +63,13 @@ class Nid < Sinatra::Base
     tag = Tag.first :tag => params[:tag]
     return "error" unless tag
 
-    @tweets = Hashtag.all(:tag_id => tag.id).tweets
+    @tweets = Hashtag.all(:tag_id => tag.id).tweets.all :order => :created_at.desc
 
     @subtitle = "Tweets tagged with #{tag.hashtag}"
     haml :index
   end # }}}
+
+  # Class Methods
 
 end
 # vim: fdm=marker:

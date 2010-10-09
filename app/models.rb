@@ -4,7 +4,7 @@ class Tweet # {{{
 
   property :id,         Serial
   property :tweet_id,   Integer, :max => 9223372036854775808
-  property :text,       String, :length => 140
+  property :text,       String, :length => 180
   property :created_at, DateTime
 
   def permalink
