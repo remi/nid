@@ -1,0 +1,36 @@
+== Nid
+
+A small Sinatra app to host your own tweets and display them the way you want and filter them in ways Twitter API doesn’t allow it.
+
+== Configuration
+
+Nid uses OAuth to fetch data from Twitter; that means you’ll have to create a
+new Twitter application, and note its consumer key and consumer secret. You
+will also have to get your access token from Twitter.
+
+Copy `nid.defaults.yml` to `nid.yml` and fill the blanks.
+
+  $ cd config
+  $ cp nid.defaults.yml nid.yml
+  $ cat nid.yml
+  twitter:
+    consumer_key:
+    consumer_secret:
+    access_token:
+    access_secret:
+
+== Usage
+
+1. Create a `nid_development` MySQL database on `localhost`
+2. Comment the `return "no more import!"` line in `nid.rb`
+3. `$ thin start --port 3000`
+4. Go to `http://localhost:3000/import`
+5. Uncomment the line from step 2
+6. Go to `http://localhost:3000`
+
+== Reasons you should not use Nid yet
+
+* There are occurences of “@remi” everywhere.
+* The import process only imports 200 tweets.
+* There are **way** too many SQL requests on each HTTP request.
+* The majority of the code was written this morning. That should tell you something.
