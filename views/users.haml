@@ -6,3 +6,5 @@
       %a(href="#{user.permalink}")
         %span.username= user.username
         %span.bar(style="width: #{(user.mention_count.to_f / @max_mentions.to_f) * 100}%;")
+          %span=user.mention_count
+= @users.pager.to_html(request.path)

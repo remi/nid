@@ -53,8 +53,8 @@ class Nid < Sinatra::Base
   end # }}}
 
   get "/mentions" do # {{{
-    @users = User.all :order => :mention_count.desc
-    @max_mentions = @users.first.mention_count
+    @users = User.page((params[:page] || 1), :per_page => 20, :order => :mention_count.desc)
+    @max_mentions = User.first(:order => :mention_count.desc).mention_count
 
     @subtitle = "Mentionned users"
     haml :users
