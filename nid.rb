@@ -70,6 +70,14 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
+  get "/tags" do # {{{
+    @tags = Tag.all :order => :tag.asc
+    @max_hashtags = @tags.first.hashtag_count
+
+    @subtitle = "Hashtags"
+    haml :tags
+  end # }}}
+
   get "/tags/:tag" do # {{{
     tag = Tag.first :tag => params[:tag]
     return "error" unless tag

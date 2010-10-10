@@ -1,0 +1,6 @@
+- if @subtitle
+  %h2= @subtitle
+%ul#tags
+  - @tags.each do |tag|
+    %li
+      =tag.tag
