@@ -45,11 +45,6 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
-  get "/statuses/:id" do # {{{
-    @tweets = [].push Tweet.all(:tweet_id => params[:id], :limit => 1).first
-    haml :index
-  end # }}}
-
   get "/mentions" do # {{{
     @users = User.all :order => :mention_count.desc
     @max_mentions = @users.first.mention_count
@@ -102,6 +97,11 @@ class Nid < Sinatra::Base
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
     @subtitle = "Tweets posted on #{day} #{month} #{year}"
+    haml :index
+  end # }}}
+
+  get %r{^/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)$} do |year, month, day, tweet_id| # {{{
+    @tweets = [].push Tweet.all(:tweet_id => tweet_id, :limit => 1).first
     haml :index
   end # }}}
 

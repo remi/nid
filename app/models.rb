@@ -8,7 +8,8 @@ class Tweet # {{{
   property :created_at, DateTime
 
   def permalink
-    "/statuses/#{self.tweet_id}"
+    date = self.created_at
+    "/#{date.year}/#{date.month.to_s.rjust(2,"0")}/#{date.day.to_s.rjust(2,"0")}/#{self.tweet_id}"
   end
 
   def text_with_markup
