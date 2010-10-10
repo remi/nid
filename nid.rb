@@ -33,6 +33,10 @@ class Nid < Sinatra::Base
   set :public, File.join(File.dirname(__FILE__), "public")
   # }}}
 
+  get %r{^(.+)/$} do |path| # {{{
+    redirect path, 301
+  end # }}}
+
   get "/import" do # {{{
     Importer.import
     "Done importing."
