@@ -80,14 +80,14 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
-  get %r{^/([0-9]{4})$} do |year|
+  get %r{^/([0-9]{4})$} do |year| # {{{
     start_date = DateTime.parse "#{year}-01-01 00:00:00"
     end_date = DateTime.parse "#{year}-12-31 23:59:59"
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
     @subtitle = "Tweets posted in #{year}"
     haml :index
-  end
+  end # }}}
 
   get %r{^/([0-9]{4})/([0-9]{2})$} do |year, month| # {{{
     start_date = DateTime.parse "#{year}-#{month}-01 00:00:00"
