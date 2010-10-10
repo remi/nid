@@ -12,6 +12,9 @@ require 'dm-pager'
 
 DataMapper::Logger.new $stdout, :debug
 DataMapper.setup :default, 'mysql://localhost/nid_development'
+DataMapper::Pagination.defaults[:size] = 5
+DataMapper::Pagination.defaults[:per_page] = 20
+DataMapper::Pagination.defaults[:pager_class] = "pager group"
 
 # ActionView
 require 'action_view'
