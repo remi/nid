@@ -4,7 +4,7 @@
   - @tweets.each do |tweet|
     %li
       %p.tweet
-        =tweet.text
+        =tweet.text_with_markup
         %a(class="permalink" href="#{tweet.permalink}")
           =tweet.relative_date
       %ul.metadata

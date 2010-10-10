@@ -82,6 +82,10 @@ header h1 a {
   font-size: 80%;
 }
 
+#tweets li a.permalink:hover {
+  color: rgba(0,0,0,0.5);
+}
+
 #tweets li .metadata {
   padding: 10px 0 0 0;
   font-size: 75%;

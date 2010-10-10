@@ -11,6 +11,10 @@ class Tweet # {{{
     "/statuses/#{self.tweet_id}"
   end
 
+  def text_with_markup
+    self.text.gsub /@([a-z0-9_]+)/i, '<a href="'+User.new(:username => '\1').permalink+'">@\1</a>'
+  end
+
   def relative_date
     time_ago_in_words self.created_at
   end
