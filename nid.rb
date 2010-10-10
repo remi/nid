@@ -8,6 +8,7 @@ require 'twitter'
 # Datamapper
 require 'dm-core'
 require 'dm-migrations'
+require 'dm-pager'
 
 DataMapper::Logger.new $stdout, :debug
 DataMapper.setup :default, 'mysql://localhost/nid_development'
@@ -40,12 +41,12 @@ class Nid < Sinatra::Base
   end # }}}
 
   get "/" do # {{{
-    @tweets = Tweet.all :limit => 20, :order => :created_at.desc
+    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
     haml :index
   end # }}}
 
   get "/statuses/:id" do # {{{
-    @tweets = [].push Tweet.first :tweet_id => params[:id]
+    @tweets = [].push Tweet.all(:tweet_id => params[:id], :limit => 1).first
     haml :index
   end # }}}
 
@@ -61,7 +62,7 @@ class Nid < Sinatra::Base
     user = User.first :username => params[:username]
     return "error" unless user
 
-    @tweets = Mention.all(:user_id => user.id).tweets.all :order => :created_at.desc
+    @tweets = Mention.all(:user_id => user.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
 
     @subtitle = "Tweets mentionning #{user.username}"
     haml :index
@@ -71,36 +72,36 @@ class Nid < Sinatra::Base
     tag = Tag.first :tag => params[:tag]
     return "error" unless tag
 
-    @tweets = Hashtag.all(:tag_id => tag.id).tweets.all :order => :created_at.desc
+    @tweets = Hashtag.all(:tag_id => tag.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
 
     @subtitle = "Tweets tagged with #{tag.hashtag}"
     haml :index
   end # }}}
 
-  get "/:year" do # {{{
-    start_date = DateTime.parse "#{params[:year]}-01-01 00:00:00"
-    end_date = DateTime.parse "#{params[:year]}-12-31 23:59:59"
-    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
+  get %r{^/([0-9]{4})$} do |year|
+    start_date = DateTime.parse "#{year}-01-01 00:00:00"
+    end_date = DateTime.parse "#{year}-12-31 23:59:59"
+    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
-    @subtitle = "Tweets posted in #{params[:year]}"
+    @subtitle = "Tweets posted in #{year}"
+    haml :index
+  end
+
+  get %r{^/([0-9]{4})/([0-9]{2})$} do |year, month| # {{{
+    start_date = DateTime.parse "#{year}-#{month}-01 00:00:00"
+    end_date = DateTime.parse "#{year}-#{month}-31 23:59:59"
+    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
+
+    @subtitle = "Tweets posted in #{month} #{year}"
     haml :index
   end # }}}
 
-  get "/:year/:month" do # {{{
-    start_date = DateTime.parse "#{params[:year]}-#{params[:month]}-01 00:00:00"
-    end_date = DateTime.parse "#{params[:year]}-#{params[:month]}-31 23:59:59"
-    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
+  get %r{^/([0-9]{4})/([0-9]{2})/([0-9]{2})$} do |year, month, day| # {{{
+    start_date = DateTime.parse "#{year}-#{month}-#{day} 00:00:00"
+    end_date = DateTime.parse "#{year}-#{month}-#{day} 23:59:59"
+    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
-    @subtitle = "Tweets posted in #{params[:month]} #{params[:year]}"
-    haml :index
-  end # }}}
-
-  get "/:year/:month/:day" do # {{{
-    start_date = DateTime.parse "#{params[:year]}-#{params[:month]}-#{params[:day]} 00:00:00"
-    end_date = DateTime.parse "#{params[:year]}-#{params[:month]}-#{params[:day]} 23:59:59"
-    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
-
-    @subtitle = "Tweets posted on #{params[:day]} #{params[:month]} #{params[:year]}"
+    @subtitle = "Tweets posted on #{day} #{month} #{year}"
     haml :index
   end # }}}
 

@@ -137,3 +137,36 @@ header h1 a {
   left: 0;
   background: #dddff5;
 }
+
+/* }}} */
+
+/* Pagination {{{
+ ******************************************************/
+
+ul.pager {
+  width: 100%;
+  overflow: hidden;
+  padding: 15px 0 0 0;
+}
+
+ul.pager li {
+  float: left;
+  padding: 0 5px 0 0;
+}
+
+ul.pager li.last,
+ul.pager li.first {
+  display: none;
+}
+
+ul.pager li a {
+  float: left;
+  display: block;
+  padding: 1px 5px;
+  background: rgba(0,0,0,0.1);
+  text-decoration: none;
+}
+
+ul.pager li.active {
+  font-weight: bold;
+}

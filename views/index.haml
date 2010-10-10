@@ -16,3 +16,4 @@
           %li.hashtags
             Hashtags in this tweet:
             =tweet.hashtags.map { |h| "<a href=\"#{h.tag.permalink}\">#{h.tag.hashtag}</a>" }.join ", "
+= @tweets.pager.to_html(request.path, :size => 5)
