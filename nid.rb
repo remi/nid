@@ -77,5 +77,32 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
+  get "/:year" do # {{{
+    start_date = DateTime.parse "#{params[:year]}-01-01 00:00:00"
+    end_date = DateTime.parse "#{params[:year]}-12-31 23:59:59"
+    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
+
+    @subtitle = "Tweets posted in #{params[:year]}"
+    haml :index
+  end # }}}
+
+  get "/:year/:month" do # {{{
+    start_date = DateTime.parse "#{params[:year]}-#{params[:month]}-01 00:00:00"
+    end_date = DateTime.parse "#{params[:year]}-#{params[:month]}-31 23:59:59"
+    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
+
+    @subtitle = "Tweets posted in #{params[:month]} #{params[:year]}"
+    haml :index
+  end # }}}
+
+  get "/:year/:month/:day" do # {{{
+    start_date = DateTime.parse "#{params[:year]}-#{params[:month]}-#{params[:day]} 00:00:00"
+    end_date = DateTime.parse "#{params[:year]}-#{params[:month]}-#{params[:day]} 23:59:59"
+    @tweets = Tweet.all :created_at => (start_date..end_date), :order => :created_at.desc
+
+    @subtitle = "Tweets posted on #{params[:day]} #{params[:month]} #{params[:year]}"
+    haml :index
+  end # }}}
+
 end
 # vim: fdm=marker:
