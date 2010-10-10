@@ -16,6 +16,9 @@ body {
   line-height: 1.25;
 }
 
+.group:after { content: "."; display: block; height: 0; clear: both; visibility: hidden; } .group {display: inline-block;}
+/* Hides from IE-mac \*/ * html .group {height: 1%;} .group {display: block;} /* End hide from IE-mac */
+
 a {
   color: #12152F;
 }
