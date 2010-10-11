@@ -6,7 +6,8 @@ class Tweet # {{{
   property :tweet_id,             Integer, :max => 9223372036854775808
   property :text,                 String, :length => 180
   property :created_at,           DateTime
-  property :category,             Integer, :default => 1
+  property :reply,                Boolean, :default => false
+  property :retweet,              Boolean, :default => false
   property :in_reply_to_user,     Integer
   property :in_reply_to_tweet_id, Integer, :max => 9223372036854775808
   property :source,               String, :length => 255

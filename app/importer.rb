@@ -11,7 +11,7 @@ class Importer < Nid
     if tweet.in_reply_to_status_id
       user = User.first_or_create :user_id => tweet.in_reply_to_user_id, :username => tweet.in_reply_to_screen_name
       tweet_data.merge!({
-        :category => 2,
+        :reply => true,
         :in_reply_to_user => user.id,
         :in_reply_to_tweet_id => tweet.in_reply_to_status_id,
       })
