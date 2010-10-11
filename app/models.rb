@@ -1,6 +1,8 @@
 class Tweet # {{{
   include DataMapper::Resource
   include ActionView::Helpers::DateHelper
+  include ActionView::Helpers::TextHelper
+  include ActionView::Helpers::TagHelper
 
   property :id,                   Serial
   property :tweet_id,             Integer, :max => 9223372036854775808
@@ -18,7 +20,7 @@ class Tweet # {{{
   end
 
   def text_with_markup
-    self.text.gsub /@([a-z0-9_]+)/i, '<a href="'+User.new(:username => '\1').permalink+'">@\1</a>'
+    self.auto_link(self.text).gsub /@([a-z0-9_]+)/i, '<a href="'+User.new(:username => '\1').permalink+'">@\1</a>'
   end
 
   def relative_date
