@@ -22,7 +22,19 @@ Copy the default configuration file and fill the blanks.
 
 == Usage
 
+=== Install all needed gems
+
   $ bundle install
+
+=== Import all your tweets.
+
+This might take a while. If it fails during importing, running the command again will start from the latest imported tweet (ie. you will not have duplicate tweets). So you can safely run this command over and over until it silently exits.
+
+  $ rake import
+
+=== Start the server
+
+  $ gem install thin
   $ thin start
 
 == Reasons you should not use Nid yet
