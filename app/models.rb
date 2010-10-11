@@ -2,10 +2,13 @@ class Tweet # {{{
   include DataMapper::Resource
   include ActionView::Helpers::DateHelper
 
-  property :id,         Serial
-  property :tweet_id,   Integer, :max => 9223372036854775808
-  property :text,       String, :length => 180
-  property :created_at, DateTime
+  property :id,                   Serial
+  property :tweet_id,             Integer, :max => 9223372036854775808
+  property :text,                 String, :length => 180
+  property :created_at,           DateTime
+  property :category,             Integer, :default => 1
+  property :in_reply_to_user,     Integer
+  property :in_reply_to_tweet_id, Integer, :max => 9223372036854775808
 
   def permalink
     date = self.created_at
