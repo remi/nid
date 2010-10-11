@@ -39,6 +39,5 @@ This might take a while. If it fails during importing, running the command again
 == Reasons you should not use Nid yet
 
 * There are occurences of *@remi* everywhere.
-* The import process only imports 200 tweets.
 * There are *way* too many SQL requests on each HTTP request.
 * The majority of the code was written this morning. That should tell you something.
