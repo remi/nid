@@ -9,3 +9,22 @@
           %a(href="/") @remi
       #content
         =yield
+      - if @users or @tags
+        #sidebar
+          .sidebar-inner
+            - if @users
+              %h2 Users
+              %ul
+                - @users.each do |user|
+                  %li
+                    %a(href="#{user.permalink}")
+                      %span.link=user.username
+                      %span.count="(#{user.mention_count})"
+            - if @tags
+              %h2 Tags
+              %ul
+                - @tags.each do |tag|
+                  %li
+                    %a(href="#{tag.permalink}")
+                      %span.link="\##{tag.tag}"
+                      %span.count="(#{tag.hashtag_count})"

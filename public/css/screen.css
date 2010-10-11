@@ -34,6 +34,7 @@ a {
   background: #fff;
   margin: 0 auto;
   -moz-box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  position: relative;
 }
 
 header {
@@ -62,6 +63,46 @@ header h1 a {
 
 #content h2 {
   padding: 10px 15px;
+}
+
+#sidebar {
+  position: absolute;
+  top: 40px;
+  right: -200px;
+  width: 200px;
+  background: rgba(0,0,0,0.1)
+}
+
+#sidebar .sidebar-inner {
+  padding: 20px 20px 1px;
+}
+
+#sidebar h2 {
+  margin: 0 0 10px;
+  padding: 0 0 5px;
+  border-bottom: 1px solid rgba(0,0,0,0.2);
+}
+
+#sidebar ul {
+  margin: 0 0 19px;
+}
+
+#sidebar ul li {
+  margin: 0 0 2px;
+}
+
+#sidebar ul li a {
+  text-decoration: none;
+}
+
+#sidebar ul li a span.link {
+  text-decoration: underline;
+}
+
+#sidebar ul li a span.count {
+  font-weight: bold;
+  font-size: 80%;
+  color: rgba(0,0,0,0.3);
 }
 
 /* }}} */

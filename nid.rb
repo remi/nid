@@ -26,18 +26,9 @@ class Nid < Sinatra::Base
     redirect path, 301
   end # }}}
 
-  get "/import" do # {{{
-    Importer.import
-    "Done importing."
-  end # }}}
-
-  get "/update" do # {{{
-    Importer.update
-    "Done updating."
-  end # }}}
-
   get "/" do # {{{
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
+    set_sidebar
     haml :index
   end # }}}
 
@@ -46,6 +37,7 @@ class Nid < Sinatra::Base
     @max_mentions = User.first(:order => :mention_count.desc).mention_count
 
     @subtitle = "Mentionned users"
+    set_sidebar
     haml :users
   end # }}}
 
@@ -56,6 +48,7 @@ class Nid < Sinatra::Base
     @tweets = Mention.all(:user_id => user.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
 
     @subtitle = "Tweets mentionning #{user.username}"
+    set_sidebar
     haml :index
   end # }}}
 
@@ -64,6 +57,7 @@ class Nid < Sinatra::Base
     @max_hashtags = @tags.first.hashtag_count
 
     @subtitle = "Hashtags"
+    set_sidebar
     haml :tags
   end # }}}
 
@@ -74,6 +68,7 @@ class Nid < Sinatra::Base
     @tweets = Hashtag.all(:tag_id => tag.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
 
     @subtitle = "Tweets tagged with #{tag.hashtag}"
+    set_sidebar
     haml :index
   end # }}}
 
@@ -83,6 +78,7 @@ class Nid < Sinatra::Base
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
     @subtitle = "Tweets posted in #{year}"
+    set_sidebar
     haml :index
   end # }}}
 
@@ -92,6 +88,7 @@ class Nid < Sinatra::Base
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
     @subtitle = "Tweets posted in #{month} #{year}"
+    set_sidebar
     haml :index
   end # }}}
 
@@ -101,12 +98,20 @@ class Nid < Sinatra::Base
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
 
     @subtitle = "Tweets posted on #{day} #{month} #{year}"
+    set_sidebar
     haml :index
   end # }}}
 
   get %r{^/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)$} do |year, month, day, tweet_id| # {{{
     @tweets = [].push Tweet.all(:tweet_id => tweet_id, :limit => 1).first
     haml :index
+  end # }}}
+
+  # Filters
+
+  def set_sidebar # {{{
+    @users = User.all :limit => 10, :order => :mention_count.desc
+    @tags = Tag.all :limit => 10, :order => :hashtag_count.desc
   end # }}}
 
 end
