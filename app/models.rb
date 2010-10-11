@@ -9,6 +9,7 @@ class Tweet # {{{
   property :category,             Integer, :default => 1
   property :in_reply_to_user,     Integer
   property :in_reply_to_tweet_id, Integer, :max => 9223372036854775808
+  property :source,               String, :length => 255
 
   def permalink
     date = self.created_at

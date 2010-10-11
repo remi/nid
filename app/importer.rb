@@ -5,6 +5,7 @@ class Importer < Nid
       :tweet_id => tweet.id,
       :text => tweet.text,
       :created_at => Time.at(DateTime.parse(tweet.created_at).to_i),
+      :source => tweet.source,
     }
 
     if tweet.in_reply_to_status_id
