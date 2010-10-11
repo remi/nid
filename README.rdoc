@@ -22,7 +22,8 @@ Copy the default configuration file and fill the blanks.
 
 == Usage
 
-*TODO*
+  $ bundle install
+  $ thin start
 
 == Reasons you should not use Nid yet
 

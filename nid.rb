@@ -1,23 +1,12 @@
-require 'sinatra/base'
-require 'haml'
-require 'json'
-require 'yaml'
-require 'open-uri'
-require 'twitter'
+require 'bundler'
+Bundler.require :default
 
 # Datamapper
-require 'dm-core'
-require 'dm-migrations'
-require 'dm-pager'
-
 DataMapper::Logger.new $stdout, :debug
 DataMapper.setup :default, 'mysql://localhost/nid_development'
 DataMapper::Pagination.defaults[:size] = 5
 DataMapper::Pagination.defaults[:per_page] = 20
 DataMapper::Pagination.defaults[:pager_class] = "pager group"
-
-# ActionView
-require 'action_view'
 
 class Nid < Sinatra::Base
 
