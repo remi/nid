@@ -3,5 +3,5 @@
 %ul#tweets
   =haml :_tweets, :layout => false, :locals => { :tweets => @tweets }
 %p.load-more
-  %a(href="javascript:;")
+  %a(href="#{request.path}")
     %span Load more…

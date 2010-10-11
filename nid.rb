@@ -28,17 +28,10 @@ class Nid < Sinatra::Base
 
   get "/" do # {{{
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
+
     set_sidebar
     haml :index
-  end # }}}
-
-  get "/tweets.json" do # {{{
-    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
-    content_type "application/json"
-    output = {}
-    output[:html] = haml :_tweets, :layout => false, :locals => { :tweets => @tweets }
-    output[:pagination] = @tweets.pager
-    output.to_json
   end # }}}
 
   get "/mentions" do # {{{
@@ -55,6 +48,7 @@ class Nid < Sinatra::Base
     return "error" unless user
 
     @tweets = Mention.all(:user_id => user.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
 
     @subtitle = "Tweets mentionning #{user.username}"
     set_sidebar
@@ -75,6 +69,7 @@ class Nid < Sinatra::Base
     return "error" unless tag
 
     @tweets = Hashtag.all(:tag_id => tag.id).tweets.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
 
     @subtitle = "Tweets tagged with #{tag.hashtag}"
     set_sidebar
@@ -85,6 +80,7 @@ class Nid < Sinatra::Base
     start_date = DateTime.parse "#{year}-01-01 00:00:00"
     end_date = DateTime.parse "#{year}-12-31 23:59:59"
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
 
     @subtitle = "Tweets posted in #{year}"
     set_sidebar
@@ -95,6 +91,7 @@ class Nid < Sinatra::Base
     start_date = DateTime.parse "#{year}-#{month}-01 00:00:00"
     end_date = DateTime.parse "#{year}-#{month}-31 23:59:59"
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
 
     @subtitle = "Tweets posted in #{month} #{year}"
     set_sidebar
@@ -105,6 +102,7 @@ class Nid < Sinatra::Base
     start_date = DateTime.parse "#{year}-#{month}-#{day} 00:00:00"
     end_date = DateTime.parse "#{year}-#{month}-#{day} 23:59:59"
     @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :created_at => (start_date..end_date), :order => :created_at.desc)
+    return tweets_json @tweets if request.xhr?
 
     @subtitle = "Tweets posted on #{day} #{month} #{year}"
     set_sidebar
@@ -113,6 +111,7 @@ class Nid < Sinatra::Base
 
   get %r{^/([0-9]{4})/([0-9]{2})/([0-9]{2})/([0-9]+)$} do |year, month, day, tweet_id| # {{{
     @tweets = [].push Tweet.all(:tweet_id => tweet_id, :limit => 1).first
+    return tweets_json @tweets if request.xhr?
     haml :index
   end # }}}
 
@@ -121,6 +120,14 @@ class Nid < Sinatra::Base
   def set_sidebar # {{{
     @side_users = User.all :limit => 10, :order => :mention_count.desc
     @side_tags = Tag.all :limit => 10, :order => :hashtag_count.desc
+  end # }}}
+
+  def tweets_json tweets # {{{
+    content_type "application/json"
+    {
+      :html => haml(:_tweets, :layout => false, :locals => { :tweets => tweets }),
+      :pagination => tweets.pager,
+    }.to_json
   end # }}}
 
 end

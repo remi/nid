@@ -7,7 +7,7 @@ $(function() {
     $this.addClass('throbber').html("<span>Loading…</span>")
     $.ajax({
       type : "GET",
-      url : "/tweets.json",
+      url : $(this).attr("href"),
       data : { page : page },
       dataType : 'json',
       success : function(data) {
@@ -18,6 +18,7 @@ $(function() {
         $this.removeClass('throbber').html("<span>Load more…</span>")
       }
     })
+    return false;
   })
 
 })
