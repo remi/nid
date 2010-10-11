@@ -110,8 +110,8 @@ class Nid < Sinatra::Base
   # Filters
 
   def set_sidebar # {{{
-    @users = User.all :limit => 10, :order => :mention_count.desc
-    @tags = Tag.all :limit => 10, :order => :hashtag_count.desc
+    @side_users = User.all :limit => 10, :order => :mention_count.desc
+    @side_tags = Tag.all :limit => 10, :order => :hashtag_count.desc
   end # }}}
 
 end
