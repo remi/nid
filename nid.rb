@@ -32,6 +32,15 @@ class Nid < Sinatra::Base
     haml :index
   end # }}}
 
+  get "/tweets.json" do # {{{
+    @tweets = Tweet.page((params[:page] || 1), :per_page => 20, :order => :created_at.desc)
+    content_type "application/json"
+    output = {}
+    output[:html] = haml :_tweets, :layout => false, :locals => { :tweets => @tweets }
+    output[:pagination] = @tweets.pager
+    output.to_json
+  end # }}}
+
   get "/mentions" do # {{{
     @users = User.page((params[:page] || 1), :per_page => 20, :order => :mention_count.desc)
     @max_mentions = User.first(:order => :mention_count.desc).mention_count

@@ -124,6 +124,7 @@ header h1 a {
   color: rgba(0,0,0,0.25);
   font-weight: bold;
   font-size: 80%;
+  white-space: nowrap;
 }
 
 #tweets li a.permalink:hover {
@@ -229,3 +230,35 @@ ul.pager li a {
 ul.pager li.active {
   font-weight: bold;
 }
+
+/* }}} */
+
+/* Load more {{{
+ ******************************************************/
+
+p.load-more {
+  padding: 15px 0 0;
+  border-top: 1px solid rgba(0,0,0,0.075);
+}
+
+p.load-more a {
+  display: block;
+  padding: 5px 0;
+  font-weight: bold;
+  text-align: center;
+}
+
+p.load-more a:hover { background: rgba(0,0,0,0.1); }
+p.load-more a.throbber:hover { background: transparent; }
+
+p.load-more a.throbber {
+  text-decoration: none;
+  color: rgba(0,0,0,0.6);
+}
+
+p.load-more a.throbber span {
+  background: url("../img/bg-load.gif") no-repeat 0 50%;
+  padding: 0 24px;
+}
+
+/* }}} */

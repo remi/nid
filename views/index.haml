@@ -1,20 +1,7 @@
 - if @subtitle
   %h2= @subtitle
 %ul#tweets
-  - @tweets.each do |tweet|
-    %li
-      %p.tweet
-        =tweet.text_with_markup
-        %a(class="permalink" href="#{tweet.permalink}" title="#{tweet.created_at}")
-          =tweet.relative_date
-      %ul.metadata
-        - if tweet.mentions.length > 0
-          %li.mentions
-            Mentions in this tweet:
-            =tweet.mentions.map { |m| "<a href=\"#{m.user.permalink}\">#{m.user.username}</a>" }.join ", "
-        - if tweet.hashtags.length > 0
-          %li.hashtags
-            Hashtags in this tweet:
-            =tweet.hashtags.map { |h| "<a href=\"#{h.tag.permalink}\">#{h.tag.hashtag}</a>" }.join ", "
-- if @tweets.length > 1
-  = @tweets.pager.to_html(request.path)
+  =haml :_tweets, :layout => false, :locals => { :tweets => @tweets }
+%p.load-more
+  %a(href="javascript:;")
+    %span Load more…
