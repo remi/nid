@@ -34,7 +34,6 @@ This might take a while. If it fails during importing, running the command again
 
 === Start the server
 
-  $ gem install thin
   $ thin start
 
 == Reasons you should not use Nid yet

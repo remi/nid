@@ -20,6 +20,7 @@ GEM
     addressable (2.2.1)
     builder (2.1.2)
     crack (0.1.8)
+    daemons (1.1.0)
     data_objects (0.10.2)
       addressable (~> 2.1)
     dm-aggregates (1.0.0)
@@ -42,6 +43,7 @@ GEM
       data_objects (= 0.10.2)
     erubis (2.6.6)
       abstract (>= 1.0.0)
+    eventmachine (0.12.10)
     extlib (0.9.15)
     haml (3.0.21)
     hashie (0.4.0)
@@ -58,6 +60,10 @@ GEM
       rack (>= 1.0)
     sinatra (1.0)
       rack (>= 1.0)
+    thin (1.2.7)
+      daemons (>= 1.0.9)
+      eventmachine (>= 0.12.6)
+      rack (>= 1.0.0)
     twitter (0.9.12)
       hashie (~> 0.4.0)
       httparty (~> 0.6.1)
@@ -77,4 +83,5 @@ DEPENDENCIES
   haml
   json
   sinatra
+  thin
   twitter
