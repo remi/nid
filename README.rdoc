@@ -32,9 +32,9 @@ This might take a while. If it fails during importing, running the command again
 
   $ rake import
 
-=== Start the server
+=== Start the development server
 
-  $ thin start
+  $ rackup
 
 == Reasons you should not use Nid yet
 

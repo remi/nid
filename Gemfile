@@ -12,7 +12,3 @@ gem 'dm-migrations'
 gem 'dm-pager'
 
 gem 'actionpack', :require => "action_view"
-
-group :development do
-  gem "thin"
-end
