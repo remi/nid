@@ -41,6 +41,7 @@ class Importer < Nid
   end # }}}
 
   def self.import # {{{
+    DataMapper.auto_upgrade!
     client = Importer.twitter
 
     page = 1
@@ -70,6 +71,7 @@ class Importer < Nid
   end # }}}
 
   def self.update # {{{
+    DataMapper.auto_upgrade!
     client = Importer.twitter
     page = 1
     options = {
