@@ -2,6 +2,7 @@
   %h2= @subtitle
 %ul#tweets
   =haml :_tweets, :layout => false, :locals => { :tweets => @tweets }
-%p.load-more
-  %a(href="#{request.path}")
-    %span Load more…
+- if @tweets.respond_to? :pager and @tweets.pager and @tweets.pager.next_page
+  %p.load-more
+    %a(href="#{request.path}")
+      %span Load more…
