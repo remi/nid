@@ -12,7 +12,7 @@ body {
   font-size: 150%;
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", sans-serif;
   font-weight: 300;
-  padding: 60px 20px;
+  padding: 60px 20px 20px;
   line-height: 1.25;
 }
 
@@ -55,6 +55,24 @@ header h1 a {
   text-decoration: none;
   color: rgba(0,0,0,0.9);
   color: #14152F;
+}
+
+footer {
+  max-width: 660px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 25px 0 0;
+  font-size: 80%;
+  color: rgba(0,0,0,0.75);
+  text-shadow: 1px 1px 0 #fff;
+  text-align: center;
+  line-height: 1.7;
+}
+
+footer a {
+  text-decoration: none;
+  color: rgba(0,0,0,0.8);
+  border-bottom: 1px solid rgba(0,0,0,0.3);
 }
 
 #content {
