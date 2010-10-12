@@ -5,13 +5,13 @@ class Tweet # {{{
   include ActionView::Helpers::TagHelper
 
   property :id,                   Serial
-  property :tweet_id,             Integer, :max => 9223372036854775808
+  property :tweet_id,             String
   property :text,                 String, :length => 180
   property :created_at,           DateTime
   property :reply,                Boolean, :default => false
   property :retweet,              Boolean, :default => false
   property :in_reply_to_user,     Integer
-  property :in_reply_to_tweet_id, Integer, :max => 9223372036854775808
+  property :in_reply_to_tweet_id, String
   property :source,               String, :length => 255
 
   def permalink
@@ -36,7 +36,7 @@ class User # {{{
   include DataMapper::Resource
 
   property :id, Serial
-  property :user_id, Integer, :max => 9223372036854775808
+  property :user_id, String
   property :username, String
   property :mention_count, Integer, :default => 0
 

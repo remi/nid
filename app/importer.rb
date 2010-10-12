@@ -54,7 +54,7 @@ class Importer < Nid
     }
 
     last_tweet = Tweet.first :order => :created_at.asc, :limit => 1
-    options.merge! :max_id => last_tweet.tweet_id-1 if last_tweet
+    options.merge! :max_id => last_tweet.tweet_id.to_i-1 if last_tweet
 
     while true
       tweets = client.user_timeline(options.merge :page => page)

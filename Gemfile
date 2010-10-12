@@ -7,7 +7,7 @@ gem "json"
 gem "twitter"
 
 gem "dm-core"
-gem "dm-mysql-adapter"
+gem "dm-postgres-adapter"
 gem 'dm-migrations'
 gem 'dm-pager'
 
