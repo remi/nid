@@ -3,6 +3,7 @@ class Tweet # {{{
   include ActionView::Helpers::DateHelper
   include ActionView::Helpers::TextHelper
   include ActionView::Helpers::TagHelper
+  include ActionView::Helpers::UrlHelper
 
   property :id,                   Serial
   property :tweet_id,             String
